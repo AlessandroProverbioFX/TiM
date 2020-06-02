@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="tU6KZA" name="TiM" projectType="guiapp" jucerVersion="5.4.7">
+<JUCERPROJECT id="tU6KZA" name="TiM" projectType="guiapp" jucerVersion="5.4.7"
+              companyName="APFX" companyWebsite="apfx.surge.sh" companyEmail="apfx.info@gmail.com">
   <MAINGROUP id="bTTBa1" name="TiM">
     <GROUP id="{50EBB4E4-6805-FF6D-B1F1-9A751054E60E}" name="Source">
       <FILE id="I6DViD" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
@@ -12,7 +13,14 @@
             file="Source/MaterialSwitch.h"/>
       <FILE id="oAtQkb" name="Ranges.h" compile="0" resource="0" file="Source/Ranges.h"/>
       <FILE id="ZShcJj" name="TopBar.h" compile="0" resource="0" file="Source/TopBar.h"/>
+      <FILE id="ejzren" name="BottomBar.h" compile="0" resource="0" file="Source/BottomBar.h"/>
+      <FILE id="RZUc7E" name="MetronomeControls.h" compile="0" resource="0"
+            file="Source/MetronomeControls.h"/>
     </GROUP>
+    <FILE id="fSzLWp" name="logoAltColor.png" compile="0" resource="1"
+          file="Assets/logoAltColor.png"/>
+    <FILE id="zcpSMY" name="beat.wav" compile="0" resource="1" file="Clicks/beat.wav"/>
+    <FILE id="SrbILl" name="click.wav" compile="0" resource="1" file="Clicks/click.wav"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">
