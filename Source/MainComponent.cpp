@@ -2,7 +2,7 @@
 #include "Dimensions.h"
 
 
-MainComponent::MainComponent()
+MainComponent::MainComponent(): topBar(&processorParams), metronomeControls(&processorParams), bottomBar(&processorParams)
 {
     setSize (WIN_WIDTH, WIN_HEIGHT);
     setAudioChannels (0, 1);

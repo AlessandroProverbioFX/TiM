@@ -3,6 +3,7 @@
 #include <JuceHeader.h>
 #include "Dimensions.h"
 #include "MaterialSwitch.h"
+#include "ProcessorData.h"
 
 using namespace std;
 
@@ -10,15 +11,17 @@ class BottomBar : public Component, private TextButton::Listener
 {
 public:
     
-    BottomBar()
+    BottomBar(ProcessorData* p)
     {
+        processorParams = p;
+        
         incrementSwitch.setBounds(BOTTOM_BLOCK_W - 5, 0.25*BOTTOM_BAR_H, SWITCH_W, 0.5*BOTTOM_BAR_H);
         incrementSwitch.setAlpha(0.0f);
         incrementSwitch.setWantsKeyboardFocus(false);
         incrementSwitch.addListener(this);
         
         matIncrementSwitch.setBounds(BOTTOM_BLOCK_W - 5, 0.25*BOTTOM_BAR_H, SWITCH_W, 0.5*BOTTOM_BAR_H);
-        matIncrementSwitch.setState(1);
+        matIncrementSwitch.setState(processorParams->isIncrementOn);
         
         beatSwitch.setBounds(2*BOTTOM_BLOCK_W + SWITCH_W - 10, 0.25*BOTTOM_BAR_H, SWITCH_W, 0.5*BOTTOM_BAR_H);
         beatSwitch.setAlpha(0.0f);
@@ -26,12 +29,13 @@ public:
         beatSwitch.addListener(this);
         
         matBeatSwitch.setBounds(2*BOTTOM_BLOCK_W + SWITCH_W - 10, 0.25*BOTTOM_BAR_H, SWITCH_W, 0.5*BOTTOM_BAR_H);
-        matBeatSwitch.setState(1);
+        matBeatSwitch.setState(processorParams->isBeatOn);
         
-        addAndMakeVisible(incrementSwitch);
+
         addAndMakeVisible(matIncrementSwitch);
-        addAndMakeVisible(beatSwitch);
         addAndMakeVisible(matBeatSwitch);
+        addAndMakeVisible(incrementSwitch);
+        addAndMakeVisible(beatSwitch);
     }
 
     ~BottomBar()
@@ -54,6 +58,8 @@ public:
     }
 
 private:
+    
+    ProcessorData* processorParams;
        
     TextButton incrementSwitch;
     TextButton beatSwitch;
@@ -64,15 +70,15 @@ private:
     {
         if (button == &incrementSwitch)
         {
-            //processor.isIncrementOn = !processor.isIncrementOn;
-            //matIncrementSwitch.setState(processor.isIncrementOn);
-            //matIncrementSwitch.repaint();
+            processorParams->isIncrementOn = !processorParams->isIncrementOn;
+            matIncrementSwitch.setState(processorParams->isIncrementOn);
+            matIncrementSwitch.repaint();
         }
         else
         {
-            //processor.isBeatOn = !processor.isBeatOn;
-            //matBeatSwitch.setState(processor.isBeatOn);
-            //matBeatSwitch.repaint();
+            processorParams->isBeatOn = !processorParams->isBeatOn;
+            matBeatSwitch.setState(processorParams->isBeatOn);
+            matBeatSwitch.repaint();
         }
     }
     

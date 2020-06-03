@@ -3,8 +3,7 @@
 #include <JuceHeader.h>
 #include "Dimensions.h"
 #include "Ranges.h"
-
-using namespace std;
+#include "ProcessorData.h"
 
 class BigSliderLookAndFeel : public LookAndFeel_V4
 {
@@ -148,8 +147,10 @@ class MetronomeControls : public Component, private Slider::Listener
 {
 public:
     
-    MetronomeControls(): backgroundColour(58,64,81)
+    MetronomeControls(ProcessorData* p): backgroundColour(58,64,81)
     {
+        processorParams = p;
+        
         bpmSlider.setLookAndFeel(&bigSliderLookAndFeel);
         bpmSlider.setBounds(150, 0, SLIDER_W, SLIDER_H);
         bpmSlider.setSliderStyle(Slider::LinearHorizontal);
@@ -161,6 +162,7 @@ public:
         bpmSlider.setColour(Slider::textBoxBackgroundColourId, backgroundColour);
         bpmSlider.setColour(Slider::textBoxTextColourId, Colours::whitesmoke);
         bpmSlider.setColour(Slider::textBoxOutlineColourId, backgroundColour);
+        bpmSlider.setValue(processorParams->bpm);
         bpmSlider.addListener(this);
         
         incrementSlider.setLookAndFeel(&bigSliderLookAndFeel);
@@ -174,6 +176,7 @@ public:
         incrementSlider.setColour(Slider::textBoxBackgroundColourId, backgroundColour);
         incrementSlider.setColour(Slider::textBoxTextColourId, Colours::whitesmoke);
         incrementSlider.setColour(Slider::textBoxOutlineColourId, backgroundColour);
+        incrementSlider.setValue(processorParams->increment);
         incrementSlider.addListener(this);
         
         barsSlider.setLookAndFeel(&bigSliderLookAndFeel);
@@ -187,6 +190,7 @@ public:
         barsSlider.setColour(Slider::textBoxBackgroundColourId, backgroundColour);
         barsSlider.setColour(Slider::textBoxTextColourId, Colours::whitesmoke);
         barsSlider.setColour(Slider::textBoxOutlineColourId, backgroundColour);
+        barsSlider.setValue(processorParams->bars);
         barsSlider.addListener(this);
     
         addAndMakeVisible(bpmSlider);
@@ -219,6 +223,8 @@ public:
     }
 
 private:
+    
+    ProcessorData* processorParams;
       
     Slider bpmSlider;
     Slider incrementSlider;
@@ -230,9 +236,9 @@ private:
     
     void sliderValueChanged(Slider* slider) override
     {
-        //processor.isOn = !processor.isOn;
-        //materialSwitch.setState(processor.isOn);
-        //materialSwitch.repaint();
+        processorParams->bpm = bpmSlider.getValue();
+        processorParams->increment = incrementSlider.getValue();
+        processorParams->bars = barsSlider.getValue();
     }
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MetronomeControls)

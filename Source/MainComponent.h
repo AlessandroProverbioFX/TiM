@@ -4,14 +4,16 @@
 #include "TopBar.h"
 #include "BottomBar.h"
 #include "MetronomeControls.h"
+#include "ProcessorData.h"
 
-class MainComponent   : public AudioAppComponent
+class MainComponent : public AudioAppComponent
 {
 public:
     
     MainComponent();
     ~MainComponent();
-
+    
+    ProcessorData processorParams;
 
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override;
@@ -23,8 +25,8 @@ public:
 private:
     
     TopBar topBar;
-    BottomBar bottomBar;
     MetronomeControls metronomeControls;
+    BottomBar bottomBar;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

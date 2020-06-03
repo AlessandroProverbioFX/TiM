@@ -3,22 +3,24 @@
 #include <JuceHeader.h>
 #include "Dimensions.h"
 #include "MaterialSwitch.h"
+#include "ProcessorData.h"
 
-using namespace std;
 
 class TopBar : public Component, private TextButton::Listener
 {
 public:
     
-    TopBar()
+    TopBar(ProcessorData* p)
     {
+        processorParams = p;
+        
         bypassSwitch.setBounds(WIN_WIDTH - 2*BORDER - SWITCH_W - 16, 0.25*TOP_BAR_H, SWITCH_W, 0.5*TOP_BAR_H);
         bypassSwitch.setAlpha(0.0f);
         bypassSwitch.setWantsKeyboardFocus(false);
         bypassSwitch.addListener(this);
         
         materialSwitch.setBounds(WIN_WIDTH - 2*BORDER - SWITCH_W - 16, 0.25*TOP_BAR_H, SWITCH_W, 0.5*TOP_BAR_H);
-        materialSwitch.setState(1);
+        materialSwitch.setState(processorParams->isRunning);
         
         addAndMakeVisible(materialSwitch);
         addAndMakeVisible(bypassSwitch);
@@ -48,6 +50,8 @@ public:
 
 private:
     
+    ProcessorData* processorParams;
+    
     Image logo = ImageCache::getFromMemory(BinaryData::logoAltColor_png, BinaryData::logoAltColor_pngSize);
     
     TextButton bypassSwitch;
@@ -55,9 +59,9 @@ private:
     
     void buttonClicked(Button* button) override
     {        
-        //processor.isOn = !processor.isOn;
-        //materialSwitch.setState(processor.isOn);
-        //materialSwitch.repaint();
+        processorParams->isRunning = !processorParams->isRunning;
+        materialSwitch.setState(processorParams->isRunning);
+        materialSwitch.repaint();
     }
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TopBar)

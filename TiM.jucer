@@ -16,6 +16,7 @@
       <FILE id="ejzren" name="BottomBar.h" compile="0" resource="0" file="Source/BottomBar.h"/>
       <FILE id="RZUc7E" name="MetronomeControls.h" compile="0" resource="0"
             file="Source/MetronomeControls.h"/>
+      <FILE id="IhTeC1" name="ProcessorData.h" compile="0" resource="0" file="Source/ProcessorData.h"/>
     </GROUP>
     <FILE id="fSzLWp" name="logoAltColor.png" compile="0" resource="1"
           file="Assets/logoAltColor.png"/>
