@@ -11,6 +11,8 @@ MainComponent::MainComponent(): topBar(&processorParams), metronomeControls(&pro
     metronomeControls.setBounds(BORDER, 2*BORDER + TOP_BAR_H, WIN_WIDTH - 2*BORDER, CENTRAL_BLOCK_H);   
     bottomBar.setBounds(BORDER, WIN_HEIGHT - BORDER - BOTTOM_BAR_H, WIN_WIDTH - 2*BORDER, BOTTOM_BAR_H);
     
+    setWantsKeyboardFocus(true);
+    
     addAndMakeVisible(topBar);
     addAndMakeVisible(metronomeControls);
     addAndMakeVisible(bottomBar);
@@ -45,3 +47,25 @@ void MainComponent::paint (Graphics& g)
 void MainComponent::resized()
 {
 }
+
+bool MainComponent::keyPressed(const KeyPress &k)
+{
+    if( k.getTextCharacter() == ' ' )
+    {
+        topBar.spaceKeyPressed();
+        return true;
+    }
+    if ( k.getTextCharacter() == '+')
+    {
+        metronomeControls.fasterKeyPressed();
+        return true;
+    }
+    if ( k.getTextCharacter() == '-')
+    {
+        metronomeControls.slowerKeyPressed();
+        return true;
+    }
+    
+    return false;
+}
+

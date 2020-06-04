@@ -47,6 +47,11 @@ public:
     void resized() override
     {
     }
+    
+    void spaceKeyPressed()
+    {
+        updateParam();
+    }
 
 private:
     
@@ -59,6 +64,11 @@ private:
     
     void buttonClicked(Button* button) override
     {        
+        updateParam();
+    }
+    
+    void updateParam()
+    {
         processorParams->isRunning = !processorParams->isRunning;
         materialSwitch.setState(processorParams->isRunning);
         materialSwitch.repaint();

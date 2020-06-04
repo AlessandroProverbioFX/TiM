@@ -27,6 +27,8 @@ private:
     TopBar topBar;
     MetronomeControls metronomeControls;
     BottomBar bottomBar;
+    
+    bool keyPressed(const KeyPress &k) override;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

@@ -221,6 +221,16 @@ public:
     void resized() override
     {
     }
+    
+    void fasterKeyPressed()
+    {
+        bpmSlider.setValue(processorParams->bpm + 1);
+    }
+    
+    void slowerKeyPressed()
+    {
+        bpmSlider.setValue(processorParams->bpm - 1);
+    }
 
 private:
     
