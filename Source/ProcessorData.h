@@ -16,6 +16,8 @@ public:
     int isBeatOn {1};
     
     int beat {1};
-    int totalBars {0};
+    int barsDone {0};
+    
+    int hasBpmChanged {0};
     
 };

@@ -73,6 +73,9 @@ private:
             processorParams->isIncrementOn = !processorParams->isIncrementOn;
             matIncrementSwitch.setState(processorParams->isIncrementOn);
             matIncrementSwitch.repaint();
+            
+            processorParams->barsDone = 0;
+            processorParams->beat = 1;
         }
         else
         {

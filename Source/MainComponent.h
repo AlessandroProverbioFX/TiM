@@ -6,7 +6,7 @@
 #include "MetronomeControls.h"
 #include "ProcessorData.h"
 
-class MainComponent : public AudioAppComponent
+class MainComponent : public AudioAppComponent, public Timer
 {
 public:
     
@@ -29,6 +29,9 @@ private:
     BottomBar bottomBar;
     
     bool keyPressed(const KeyPress &k) override;
+    
+    void timerCallback() override;
+    void updateTimer();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

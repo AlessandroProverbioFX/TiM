@@ -222,14 +222,9 @@ public:
     {
     }
     
-    void fasterKeyPressed()
+    void updateBpm()
     {
-        bpmSlider.setValue(processorParams->bpm + 1);
-    }
-    
-    void slowerKeyPressed()
-    {
-        bpmSlider.setValue(processorParams->bpm - 1);
+        bpmSlider.setValue(processorParams->bpm);
     }
 
 private:
@@ -246,9 +241,20 @@ private:
     
     void sliderValueChanged(Slider* slider) override
     {
-        processorParams->bpm = bpmSlider.getValue();
-        processorParams->increment = incrementSlider.getValue();
-        processorParams->bars = barsSlider.getValue();
+        if (slider == &bpmSlider)
+        {
+            processorParams->bpm = bpmSlider.getValue();
+            processorParams->hasBpmChanged = 1;
+        }
+        else if (slider == &barsSlider)
+        {
+            processorParams->bars = barsSlider.getValue();
+            processorParams->barsDone = 0;
+        }
+        else
+        {
+            processorParams->increment = incrementSlider.getValue();
+        }
     }
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MetronomeControls)
