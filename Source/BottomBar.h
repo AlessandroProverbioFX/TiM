@@ -36,6 +36,9 @@ public:
         addAndMakeVisible(matBeatSwitch);
         addAndMakeVisible(incrementSwitch);
         addAndMakeVisible(beatSwitch);
+        
+        Typeface::Ptr muli = Typeface::createSystemTypefaceFor (BinaryData::Muli_ttf, BinaryData::Muli_ttfSize);
+        getLookAndFeel().setDefaultSansSerifTypeface(muli);
     }
 
     ~BottomBar()
@@ -48,7 +51,7 @@ public:
         g.fillRoundedRectangle (0, 0, getWidth(), getHeight(), FILLET);
         
         g.setColour(Colours::whitesmoke);
-        g.setFont(Font("Muli", TEXT_H, Font::plain));
+        g.setFont(TEXT_H);
         g.drawText("Incremental Speed", 0, 0.1*getHeight(), BOTTOM_BLOCK_W, 0.8*getHeight(), Justification::centred);
         g.drawText("Beat Accent", BOTTOM_BLOCK_W + SWITCH_W + 20, 0.1*getHeight(), BOTTOM_BLOCK_W, 0.8*getHeight(), Justification::centred);
     }

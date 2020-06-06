@@ -6,7 +6,7 @@
 MainComponent::MainComponent(): topBar(&processorParams), metronomeControls(&processorParams), bottomBar(&processorParams)
 {
     setSize (WIN_WIDTH, WIN_HEIGHT);
-    setAudioChannels (0, 1);
+    setAudioChannels (0, 2);
     
     topBar.setBounds(BORDER, BORDER, WIN_WIDTH - 2*BORDER, TOP_BAR_H);
     metronomeControls.setBounds(BORDER, 2*BORDER + TOP_BAR_H, WIN_WIDTH - 2*BORDER, CENTRAL_BLOCK_H);   
@@ -18,7 +18,16 @@ MainComponent::MainComponent(): topBar(&processorParams), metronomeControls(&pro
     addAndMakeVisible(metronomeControls);
     addAndMakeVisible(bottomBar);
     
-    updateTimer();
+    updateTimerAndBpm();
+    
+    formatManager.registerBasicFormats();
+    
+    ticReader = formatManager.createReaderFor(tic);
+    tocReader = formatManager.createReaderFor(toc);
+    std::unique_ptr<AudioFormatReaderSource> ticTempSource (new AudioFormatReaderSource (ticReader, true));
+    std::unique_ptr<AudioFormatReaderSource> tocTempSource (new AudioFormatReaderSource (tocReader, true));
+    ticSource.reset (ticTempSource.release());
+    tocSource.reset (tocTempSource.release());
 }
 
 MainComponent::~MainComponent()
@@ -28,17 +37,23 @@ MainComponent::~MainComponent()
 
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-
+    transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
 void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
-    bufferToFill.clearActiveBufferRegion();
+    if (!processorParams.isRunning)
+    {
+        bufferToFill.clearActiveBufferRegion();
+        return;
+    }
+ 
+    transportSource.getNextAudioBlock(bufferToFill);
 }
 
 void MainComponent::releaseResources()
 {
-
+    transportSource.releaseResources();
 }
 
 
@@ -61,20 +76,20 @@ bool MainComponent::keyPressed(const KeyPress &k)
     if ( k.getTextCharacter() == '+')
     {
         processorParams.bpm = (processorParams.bpm + 1 <= BPM_END) ? processorParams.bpm + 1 : BPM_END;
-        updateTimer();
+        updateTimerAndBpm();
         return true;
     }
     if ( k.getTextCharacter() == '-')
     {
         processorParams.bpm = (processorParams.bpm - 1 >= BPM_START) ? processorParams.bpm - 1 : BPM_START;
-        updateTimer();
+        updateTimerAndBpm();
         return true;
     }
     
     return false;
 }
 
-void MainComponent::updateTimer()
+void MainComponent::updateTimerAndBpm()
 {
     Timer::startTimer( (60.0 / float(processorParams.bpm))*1000 );
     metronomeControls.updateBpm();
@@ -90,26 +105,27 @@ void MainComponent::timerCallback()
         {
             processorParams.bpm = (processorParams.bpm + processorParams.increment <= BPM_END) ?
                                    processorParams.bpm + processorParams.increment : BPM_END;
-            updateTimer();
+            updateTimerAndBpm();
             processorParams.barsDone = 0;
         }
+        
         // Update BPM
         if (processorParams.hasBpmChanged)
         {
-            updateTimer();
+            updateTimerAndBpm();
             processorParams.hasBpmChanged = 0;
         }
         
         // Play Metronome Sound
         if (processorParams.beat == 1 && processorParams.isBeatOn)
         {
-            // Play Tik
-            std::cout << processorParams.beat << " start " << processorParams.bpm << std::endl;
+            transportSource.setSource(ticSource.get(), 0, nullptr, ticReader->sampleRate);
+            transportSource.start();
         }
         else
         {
-            // Play Tok
-            std::cout << processorParams.beat << " " << processorParams.bpm <<  std::endl;
+            transportSource.setSource(tocSource.get(), 0, nullptr, ticReader->sampleRate);
+            transportSource.start();
         }
         
         // Update Bars Count
@@ -124,4 +140,5 @@ void MainComponent::timerCallback()
         }
     }
 }
+
 

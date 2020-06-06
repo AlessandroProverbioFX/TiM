@@ -24,6 +24,9 @@ public:
         
         addAndMakeVisible(materialSwitch);
         addAndMakeVisible(bypassSwitch);
+        
+        Typeface::Ptr muli = Typeface::createSystemTypefaceFor (BinaryData::Muli_ttf, BinaryData::Muli_ttfSize);
+        getLookAndFeel().setDefaultSansSerifTypeface(muli);
     }
 
     ~TopBar()
@@ -38,8 +41,8 @@ public:
         g.drawImage(logo, 16, 0.05*getHeight() + 1, 0.9*getHeight(), 0.9*getHeight(), 0, 0, 200, 200);
         
         g.setColour(Colours::whitesmoke);
-        g.setFont(Font("Muli", TEXT_H, Font::plain));
-        g.drawText("TiM - The Incremental Metronome 0.0.0", 70, 0.1*getHeight(), 400, 0.8*getHeight(), Justification::centredLeft);
+        g.setFont(TEXT_H);
+        g.drawText("TiM - The Incremental Metronome 1.0", 70, 0.1*getHeight(), 400, 0.8*getHeight(), Justification::centredLeft);
         g.drawText("Start", WIN_WIDTH - 2*BORDER - SWITCH_W - 132, 0.1*getHeight(), 100,
                    0.8*getHeight(), Justification::centredRight);
     }

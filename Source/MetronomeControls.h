@@ -121,7 +121,7 @@ public:
         auto l = new Label;
 
         l->setJustificationType (Justification::centred);
-        l->setFont(Font("Muli", 32, Font::plain));
+        l->setFont(32);
         l->setKeyboardType (TextInputTarget::decimalKeyboard);
         
         l->setColour (Label::textColourId, slider.findColour (Slider::textBoxTextColourId));
@@ -196,6 +196,10 @@ public:
         addAndMakeVisible(bpmSlider);
         addAndMakeVisible(incrementSlider);
         addAndMakeVisible(barsSlider);
+        
+        Typeface::Ptr muli = Typeface::createSystemTypefaceFor (BinaryData::Muli_ttf, BinaryData::Muli_ttfSize);
+        getLookAndFeel().setDefaultSansSerifTypeface(muli);
+        bigSliderLookAndFeel.setDefaultSansSerifTypeface(muli);
     }
 
     ~MetronomeControls()
@@ -211,7 +215,7 @@ public:
         g.fillRoundedRectangle (0, 0, getWidth(), getHeight(), FILLET);
         
         g.setColour(Colours::whitesmoke);
-        g.setFont(Font("Muli", 32, Font::plain));
+        g.setFont(32);
         
         g.drawText("BPM",       10, 0,          130, BLOCKS_H, Justification::centred);
         g.drawText("Increment", 10, BLOCKS_H,   130, BLOCKS_H, Justification::centred);

@@ -12,6 +12,9 @@ Simple and easy to use Metronome with customizable increasing speed.
  * " + " --> to increase BPM (+1)
  * " - " --> to decrease BPM (-1)
 
- ## GUI
+## Pre-Compiled App:
+ * In the folder you can download a pre-compiled version for macOS. 
+
+## GUI
 
  ![GUI](Assets/GUI.png)

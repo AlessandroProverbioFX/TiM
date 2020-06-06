@@ -31,7 +31,19 @@ private:
     bool keyPressed(const KeyPress &k) override;
     
     void timerCallback() override;
-    void updateTimer();
+    void updateTimerAndBpm();
+    
+    AudioFormatManager formatManager;
+    
+    MemoryInputStream* tic = new MemoryInputStream(BinaryData::beat_wav, BinaryData::beat_wavSize, false);
+    AudioFormatReader* ticReader;
+    std::unique_ptr<AudioFormatReaderSource> ticSource;
+    
+    MemoryInputStream* toc = new MemoryInputStream(BinaryData::click_wav, BinaryData::click_wavSize, false);
+    AudioFormatReader* tocReader;
+    std::unique_ptr<AudioFormatReaderSource> tocSource;
+    
+    AudioTransportSource transportSource;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
