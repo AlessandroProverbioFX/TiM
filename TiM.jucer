@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="tU6KZA" name="TiM" projectType="guiapp" jucerVersion="5.4.7"
-              companyName="APFX" companyWebsite="apfx.surge.sh" companyEmail="apfx.info@gmail.com">
+<JUCERPROJECT id="tU6KZA" name="TiM" projectType="guiapp" companyName="APFX"
+              companyWebsite="apfx.surge.sh" companyEmail="apfx.info@gmail.com"
+              displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="bTTBa1" name="TiM">
     <GROUP id="{50EBB4E4-6805-FF6D-B1F1-9A751054E60E}" name="Source">
       <FILE id="I6DViD" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
