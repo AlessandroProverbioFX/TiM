@@ -33,7 +33,7 @@ private:
     void timerCallback() override;
     void updateTimerAndBpm();
     
-    AudioFormatManager formatManager;
+    WavAudioFormat formatManager;
     
     MemoryInputStream* tic = new MemoryInputStream(BinaryData::beat_wav, BinaryData::beat_wavSize, false);
     AudioFormatReader* ticReader;

@@ -21,7 +21,7 @@ namespace BinaryData
     const int            Muli_ttfSize = 89244;
 
     extern const char*   TiMicon_png;
-    const int            TiMicon_pngSize = 239362;
+    const int            TiMicon_pngSize = 235673;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 5;

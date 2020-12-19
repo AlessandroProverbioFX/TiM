@@ -20,10 +20,8 @@ MainComponent::MainComponent(): topBar(&processorParams), metronomeControls(&pro
     
     updateTimerAndBpm();
     
-    formatManager.registerBasicFormats();
-    
-    ticReader = formatManager.createReaderFor(tic);
-    tocReader = formatManager.createReaderFor(toc);
+    ticReader = formatManager.createReaderFor(tic, true);
+    tocReader = formatManager.createReaderFor(toc, true);
     std::unique_ptr<AudioFormatReaderSource> ticTempSource (new AudioFormatReaderSource (ticReader, true));
     std::unique_ptr<AudioFormatReaderSource> tocTempSource (new AudioFormatReaderSource (tocReader, true));
     ticSource.reset (ticTempSource.release());
